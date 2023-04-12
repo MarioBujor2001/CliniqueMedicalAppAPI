@@ -1,9 +1,7 @@
 package com.example.medicalappapi.controllers;
 
-import com.example.medicalappapi.models.Appointment;
-import com.example.medicalappapi.models.Medic;
-import com.example.medicalappapi.models.Order;
-import com.example.medicalappapi.models.Patient;
+import com.example.medicalappapi.models.*;
+import com.example.medicalappapi.models.dto.BodyAnalysisDTO;
 import com.example.medicalappapi.models.exception.MissingResourceException;
 import com.example.medicalappapi.models.exception.RepoSaveException;
 import com.example.medicalappapi.services.AppointmentService;
@@ -99,5 +97,19 @@ public class PacientController {
             return ResponseEntity.created(uri).body(orderNew);
         }
         throw new MissingResourceException();
+    }
+
+    @PutMapping("/{id}/analysis")
+    public ResponseEntity<BodyAnalysis> addBodyAnalysis(@PathVariable String id, @RequestBody BodyAnalysisDTO bodyAnalysisDTO) throws MissingResourceException {
+        BodyAnalysis bodyAnalysis = this.patientService.addBodyAnalysis(id, bodyAnalysisDTO);
+        if(bodyAnalysis == null){
+            throw new MissingResourceException();
+        }
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(bodyAnalysis.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(bodyAnalysis);
     }
 }

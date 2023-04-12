@@ -1,5 +1,6 @@
 package com.example.medicalappapi.models;
 
+import com.example.medicalappapi.models.enums.Specialties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

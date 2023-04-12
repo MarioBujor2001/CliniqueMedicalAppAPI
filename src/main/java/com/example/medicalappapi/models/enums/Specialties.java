@@ -1,4 +1,4 @@
-package com.example.medicalappapi.models;
+package com.example.medicalappapi.models.enums;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
