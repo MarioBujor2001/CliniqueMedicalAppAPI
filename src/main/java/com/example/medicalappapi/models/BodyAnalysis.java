@@ -2,6 +2,7 @@ package com.example.medicalappapi.models;
 
 import com.example.medicalappapi.models.enums.ActivityLevels;
 import com.example.medicalappapi.models.enums.Genders;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +30,6 @@ public class BodyAnalysis {
 
     @OneToOne
     @JoinColumn(name="patient_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"appointments","orders"})
     private Patient patient;
 }

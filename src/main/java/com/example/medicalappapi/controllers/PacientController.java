@@ -5,6 +5,7 @@ import com.example.medicalappapi.models.dto.BodyAnalysisDTO;
 import com.example.medicalappapi.models.exception.MissingResourceException;
 import com.example.medicalappapi.models.exception.RepoSaveException;
 import com.example.medicalappapi.services.AppointmentService;
+import com.example.medicalappapi.services.BodyAnalysisService;
 import com.example.medicalappapi.services.OrderService;
 import com.example.medicalappapi.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class PacientController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    BodyAnalysisService bodyAnalysisService;
 
     @PostMapping
     public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) throws RepoSaveException {
@@ -111,5 +115,14 @@ public class PacientController {
                 .buildAndExpand(bodyAnalysis.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(bodyAnalysis);
+    }
+
+    @GetMapping("/{id}/analysis")
+    public ResponseEntity<BodyAnalysis> getBodyAnalysis(@PathVariable String id) throws MissingResourceException {
+        BodyAnalysis body = this.bodyAnalysisService.findByPatientId(id);
+        if(body == null){
+            throw new MissingResourceException();
+        }
+        return ResponseEntity.ok(body);
     }
 }
