@@ -2,6 +2,7 @@ package com.example.medicalappapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,10 @@ public class Patient extends Person implements Serializable {
     @OneToMany(mappedBy = "patient", orphanRemoval = true)
     @JsonIgnoreProperties("patient")
     private List<Order> orders = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "patients")
+    @JsonIgnoreProperties("patients")
+    private List<Diagnosis> diagnoses;
 
     public Patient(String id, String firstName, String lastName, String email, String cnp, Integer age, String address) {
         super(id, firstName, lastName, email, cnp, age, address);
